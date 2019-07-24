@@ -9,6 +9,7 @@ import android.os.Build;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.ConsoleMessage;
 import android.webkit.CookieManager;
 import android.webkit.GeolocationPermissions;
 import android.webkit.ValueCallback;
@@ -242,6 +243,14 @@ class WebviewManager {
                 Map<String, Object> args = new HashMap<>();
                 args.put("progress", progress / 100.0);
                 FlutterWebviewPlugin.channel.invokeMethod("onProgressChanged", args);
+            }
+
+            @Override
+            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+                Map<String, Object> args = new HashMap<>();
+                args.put("message", consoleMessage.message());
+                FlutterWebviewPlugin.channel.invokeMethod("onConsoleMessage", args);
+                return true;
             }
         });
     }
