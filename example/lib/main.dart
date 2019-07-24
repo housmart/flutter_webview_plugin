@@ -99,6 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   StreamSubscription<double> _onScrollXChanged;
 
+  StreamSubscription<String> _onConsoleMessage;
+
   final _urlCtrl = TextEditingController(text: selectedUrl);
 
   final _codeCtrl = TextEditingController(text: 'window.navigator.userAgent');
@@ -173,6 +175,15 @@ class _MyHomePageState extends State<MyHomePage> {
         });
       }
     });
+
+    // Android only
+    _onConsoleMessage = flutterWebViewPlugin.onConsoleMessage.listen((String message) {
+      if (mounted) {
+        setState(() {
+          _history.add('onConsoleMessage: $message');
+        });
+      }
+    });
   }
 
   @override
@@ -185,6 +196,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _onProgressChanged.cancel();
     _onScrollXChanged.cancel();
     _onScrollYChanged.cancel();
+    _onConsoleMessage.cancel();
 
     flutterWebViewPlugin.dispose();
 
