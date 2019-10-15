@@ -70,6 +70,8 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
     } else if ([@"reload" isEqualToString:call.method]) {
         [self reload];
         result(nil);
+    } else if ([@"canGoBack" isEqualToString:call.method]) {
+        result([self canGoBack]);
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -250,6 +252,13 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
 - (void)reload {
     if (self.webview != nil) {
         [self.webview reload];
+    }
+}
+- (BOOL)canGoBack {
+    if (self.webview != nil) {
+        return [self.webview canGoBack];
+    } else {
+        return NO;
     }
 }
 
