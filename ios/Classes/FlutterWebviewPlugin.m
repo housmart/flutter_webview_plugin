@@ -71,7 +71,7 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
         [self reload];
         result(nil);
     } else if ([@"canGoBack" isEqualToString:call.method]) {
-        result([self canGoBack]);
+        result([NSNumber numberWithBool: [self canGoBack]]);
     } else {
         result(FlutterMethodNotImplemented);
     }
