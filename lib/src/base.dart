@@ -116,6 +116,7 @@ class FlutterWebviewPlugin {
   /// - [scrollBar]: enable or disable scrollbar
   /// - [supportMultipleWindows] enable multiple windows support in Android
   /// - [invalidUrlRegex] is the regular expression of URLs that web view shouldn't load.
+  /// - [allowsBack] enable swipe gesture in iOS
   /// For example, when webview is redirected to a specific URL, you want to intercept
   /// this process by stopping loading this URL and replacing webview by another screen.
   Future<Null> launch(String url, {
@@ -138,6 +139,7 @@ class FlutterWebviewPlugin {
     String invalidUrlRegex,
     bool geolocationEnabled,
     bool debuggingEnabled,
+    bool allowsBack,
   }) async {
     final args = <String, dynamic>{
       'url': url,
@@ -158,6 +160,7 @@ class FlutterWebviewPlugin {
       'invalidUrlRegex': invalidUrlRegex,
       'geolocationEnabled': geolocationEnabled ?? false,
       'debuggingEnabled': debuggingEnabled ?? false,
+      'allowsBack': allowsBack ?? true,
     };
 
     if (headers != null) {

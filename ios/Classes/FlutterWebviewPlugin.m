@@ -87,6 +87,7 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
     NSNumber *withZoom = call.arguments[@"withZoom"];
     NSNumber *scrollBar = call.arguments[@"scrollBar"];
     NSNumber *withJavascript = call.arguments[@"withJavascript"];
+    NSNumber *allowsBack = call.arguments[@"allowsBack"];
     _invalidUrlRegex = call.arguments[@"invalidUrlRegex"];
 
     if (clearCache != (id)[NSNull null] && [clearCache boolValue]) {
@@ -116,6 +117,7 @@ static NSString *const CHANNEL_NAME = @"flutter_webview_plugin";
     self.webview.hidden = [hidden boolValue];
     self.webview.scrollView.showsHorizontalScrollIndicator = [scrollBar boolValue];
     self.webview.scrollView.showsVerticalScrollIndicator = [scrollBar boolValue];
+    self.webview.allowsBackForwardNavigationGestures = [allowsBack boolValue];
     
     [self.webview addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:NULL];
 
