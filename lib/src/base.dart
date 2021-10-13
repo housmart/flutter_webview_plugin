@@ -42,6 +42,7 @@ class FlutterWebviewPlugin {
   final _onProgressChanged = new StreamController<double>.broadcast();
   final _onHttpError = StreamController<WebViewHttpError>.broadcast();
   final _onPostMessage = StreamController<JavascriptMessage>.broadcast();
+  final _onConsoleMessage = StreamController<String>.broadcast();
 
   final Map<String, JavascriptChannel> _javascriptChannels =
       <String, JavascriptChannel>{};
@@ -81,6 +82,9 @@ class FlutterWebviewPlugin {
         _handleJavascriptChannelMessage(
             call.arguments['channel'], call.arguments['message']);
         break;
+      case 'onConsoleMessage':
+        _onConsoleMessage.add(call.arguments["message"]);
+      break;
     }
   }
 
@@ -108,6 +112,9 @@ class FlutterWebviewPlugin {
   Stream<double> get onScrollXChanged => _onScrollXChanged.stream;
 
   Stream<WebViewHttpError> get onHttpError => _onHttpError.stream;
+
+  /// Listening console.log for Android
+  Stream<String> get onConsoleMessage => _onConsoleMessage.stream;
 
   /// Start the Webview with [url]
   /// - [headers] specify additional HTTP headers
@@ -286,6 +293,7 @@ class FlutterWebviewPlugin {
     _onScrollYChanged.close();
     _onHttpError.close();
     _onPostMessage.close();
+    _onConsoleMessage.close();
     _instance = null;
   }
 
