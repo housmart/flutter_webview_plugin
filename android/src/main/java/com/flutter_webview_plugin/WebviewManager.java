@@ -261,6 +261,14 @@ class WebviewManager {
                 FlutterWebviewPlugin.channel.invokeMethod("onProgressChanged", args);
             }
 
+            @Override
+            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+                Map<String, Object> args = new HashMap<>();
+                args.put("message", consoleMessage.message());
+                FlutterWebviewPlugin.channel.invokeMethod("onConsoleMessage", args);
+                return true;
+            }
+
             public void onGeolocationPermissionsShowPrompt(String origin, GeolocationPermissions.Callback callback) {
                 callback.invoke(origin, true, false);
             }
